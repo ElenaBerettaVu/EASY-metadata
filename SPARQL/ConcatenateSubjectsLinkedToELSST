@@ -2,14 +2,13 @@ PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX disco: <http://rdf-vocabulary.ddialliance.org/discovery#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-
-SELECT DISTINCT ?subject ?elsstLabel ?elsstConcept
-(COUNT(DISTINCT ?easyDataset) AS ?counts)
+SELECT DISTINCT ?easyDataset 
+(GROUP_CONCAT(DISTINCT ?subject;separator="'\n'") as ?easySubjects)
+(GROUP_CONCAT(DISTINCT ?elsstLabel;separator="'\n'") as ?elsstLabels)
+(GROUP_CONCAT(DISTINCT ?elsstConcept;separator="'\n'") as ?elsstConcepts)
 WHERE {
     ?easyDataset a disco:LogicalDataSet ;
                  dct:subject ?subject .
     ?elsstConcept skos:prefLabel ?elsstLabel .
-    #OPTIONAL {FILTER (str(?elsstLabel) = ucase(str(?subject)))} 
-    BIND (EXISTS{FILTER (str(?elsstLabel) = ucase(str(?subject)))} AS ?y)
-    BIND (IF(?y, ?elsstLabel, "0") AS ?hasElsst)
-} GROUP BY ?subject ?elsstLabel ?elsstConcept
+    FILTER (str(?elsstLabel) = ucase(str(?subject))) .
+} GROUP BY ?easyDataset
