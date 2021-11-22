@@ -2,7 +2,6 @@ PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX disco: <http://rdf-vocabulary.ddialliance.org/discovery#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-
 SELECT DISTINCT ?easyDataset ?subject ?elsstLabel ?elsstConcept
 WHERE {
     ?easyDataset a disco:LogicalDataSet ;
