@@ -13,6 +13,3 @@ WHERE {
     BIND (EXISTS{FILTER (str(?elsstLabel) = ucase(str(?subject)))} AS ?y)
     BIND (IF(?y, ?elsstLabel, "0") AS ?hasElsst)
 } GROUP BY ?subject ?elsstLabel ?elsstConcept
-
-
-
